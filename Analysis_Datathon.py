@@ -40,16 +40,17 @@ valdata['stiFeatures']=valdata['stiFeatures'].apply(ast.literal_eval)
 
 
 #The following code breaks down interests as per depth level.
-'''
+
 x={1:[],2:[],3:[],4:[],5:[],6:[]}
+y={}
 for index, row in infodata.iterrows():
     string=row['topic_name']
+    id=row['topic_id']
     depth=string.count('/')
-    x[depth].append(string)
+    x[depth].append(id)
+    y[id]=depth
 
-print (x[1])
-print ('These are the broad topics')
-'''
+
 
 
 #The following code shows that you are more likely to not have short term interests, if you are a convert.
@@ -70,3 +71,28 @@ print (nostitrue, " out of 1465 ", nostitrue/1465)
 print (nostifalse, " out of 94941", nostifalse/94941)
 
 '''
+
+#The follwoing code shows that the avg depth of long term interests does not influence conversion
+'''
+meanweighttrue=0
+meanweightfalse=0
+for index, row in traindata.iterrows():
+    lti=row['ltiFeatures']
+    lti=ast.literal_eval(lti)
+    ltikeys=lti.keys()
+    weightltikeys=0
+    for i in ltikeys:
+        j=int(i)
+        if (j in y.keys()):
+            weightltikeys=weightltikeys+ (y[j]/6)*lti[i]
+    k=row['userID']
+    if (k<1500):
+        meanweighttrue=meanweighttrue+weightltikeys
+    else:
+        meanweightfalse=meanweightfalse+weightltikeys
+meanweighttrue=meanweighttrue/1465
+meanweightfalse=meanweightfalse/94941
+print (meanweighttrue)
+print (meanweightfalse)
+'''
+
