@@ -19,3 +19,11 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
+
+infofile = "interest_topics.csv"
+trainfile = "training.csv"
+valfile = "validation.csv"
+infodata = pandas.read_csv(infofile)
+traindata = pandas.read_csv(trainfile)
+valdata = pandas.read_csv(valfile)
+print(infodata.head(20))
